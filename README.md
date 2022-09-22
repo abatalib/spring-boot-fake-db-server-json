@@ -2,6 +2,13 @@
 
 Serveur API REST pour exécuter des requêtes GET de test sur des données incluant des milliers de lignes.
 
+# Dockerhub
+Le projet est disponible également sous format Docker, référez vous à l'adresse suivante :
+
+<pre>
+<a href="https://hub.docker.com/r/abatalib/fake_db_api_rest">https://hub.docker.com/r/abatalib/fake_db_api_rest</a>
+</pre>
+
 # Données
 
 La base de données inclue <b>3221</b> lignes. Voici un extrait des données
