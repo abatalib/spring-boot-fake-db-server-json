@@ -1,7 +1,8 @@
-package com.sqlite.population.repository;
+package com.api.population.repository;
 
-import com.sqlite.population.model.EducPopulation;
+import com.api.population.model.EducPopulation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -28,4 +29,14 @@ public interface EducPopulationRepository extends JpaRepository<EducPopulation,L
 
     @Query("SELECT e FROM EducPopulation e WHERE e.age<=?1 AND UPPER(e.country_name)=UPPER(?2)")
     List<EducPopulation> findByLessAgeCountry(int age, String cName);
+
+    @Query("SELECT MAX (e.id) as last FROM EducPopulation e")
+    Long findLastId();
+
+    @Query("SELECT e FROM EducPopulation e WHERE UPPER(e.country_name)=?1 AND UPPER(e.country_code)=?2 AND e.age=?3")
+    Optional<EducPopulation> searchDoublant(String cName, String cCode, int age);
+
+    @Query("DELETE FROM EducPopulation WHERE id=?1")
+    @Modifying
+    Integer deleteElem(Long id);
 }

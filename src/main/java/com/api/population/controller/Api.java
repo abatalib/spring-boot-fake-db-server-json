@@ -1,14 +1,13 @@
-package com.sqlite.population.controller;
+package com.api.population.controller;
 
-import com.sqlite.population.dto.DtoResp;
-import com.sqlite.population.service.EducPopulationService;
+import com.api.population.dto.DtoResp;
+import com.api.population.model.EducPopulation;
+import com.api.population.service.EducPopulationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -63,5 +62,20 @@ public class Api {
     public ResponseEntity<DtoResp> getListByAgeCountryName(@PathVariable("age") int age,
                                                            @PathVariable("cname") String cName){
         return new ResponseEntity<>(educPopulationService.getListPerAgeCountry(age, cName), HttpStatus.OK);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<DtoResp> add(@RequestBody EducPopulation educPopulation){
+        return new ResponseEntity<>(educPopulationService.add(educPopulation), HttpStatus.OK);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<DtoResp> update(@RequestBody EducPopulation educPopulation){
+        return new ResponseEntity<>(educPopulationService.update(educPopulation), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DtoResp> delete(@PathVariable Long id){
+        return new ResponseEntity<>(educPopulationService.deleteElem(id), HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package com.sqlite.population;
+package com.api.population;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

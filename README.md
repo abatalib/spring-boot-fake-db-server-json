@@ -1,12 +1,11 @@
-# Aperçu
-
-Serveur API REST pour exécuter des requêtes GET de test sur des données incluant des milliers de lignes.
+# API JSON SERVER pour vos tests RESTful
+Serveur API REST pour exécuter des requêtes GET/POST/PUT/DELETE de test sur des données incluant des milliers de lignes.
 
 # Dockerhub
 Le projet est disponible également sous format Docker, référez vous à l'adresse suivante :
 
 <pre>
-<a href="https://hub.docker.com/r/abatalib/fake_db_api_rest">https://hub.docker.com/r/abatalib/fake_db_api_rest</a>
+<a href="https://hub.docker.com/r/abatalib/fake_db_api_rest" target="_blank">https://hub.docker.com/r/abatalib/fake_db_api_rest</a>
 </pre>
 
 # Données
@@ -43,25 +42,58 @@ La base de données inclue <b>3221</b> lignes. Voici un extrait des données
 
 # Requêtes
 
-<i>NB : toutes les requêtes sont en GET.</i>
 <pre>
-"/" => Liste globale
+    -------------------------- Requêtes GET --------------------------
+    GET "/list" => Liste globale
+    GET "/age/{age}" => Liste dont l'âge égal à la valeur passée sous {age} (ex. : "localhost/age/12")
+    GET "/age/up/{age}" => Liste dont l'âge est supérieur ou égal à la valeur passée sous {age} (ex. : "localhost/age/up/15")
+    GET "/age/less/{age}" =>  Liste dont l'âge est inférieur ou égal à la valeur passée sous {age} (ex. : "localhost/age/less/20")
 
-"/age/{age}" => Liste dont l'âge égal à la valeur passée sous {age} (ex. : "localhost:9002/age/12")
-"/age/up/{age}" => Liste dont l'âge est supérieur ou égal à la valeur passée sous {age} (ex. : "localhost:9002/age/up/15")
-"/age/less/{age}" =>  Liste dont l'âge est inférieur ou égal à la valeur passée sous {age} (ex. : "localhost:9002/age/less/20")
+    GET "/country-name/{cname}" =>  Liste dont le nom du pays égal à la valeur passée sous {cname} (ex. : "localhost/country-name/morocco")
+    GET "/country-code/{ccode}" =>  Liste dont le code du pays égal à la valeur passée sous {ccode} (ex. : "localhost/country-code/mar")
 
-"/country-name/{cname}" =>  Liste dont le nom du pays égal à la valeur passée sous {cname} (ex. : "localhost:9002/country-name/morocco")
-"/country-code/{ccode}" =>  Liste dont le code du pays égal à la valeur passée sous {ccode} (ex. : "localhost:9002/country-code/mar")
+    GET "/age/{age}/country-name/{cname}" => Liste dont l'âge égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost/age/16/country-name/morocco")
+    GET "/age/up/{age}/country-name/{cname}" => Liste dont l'âge est supérieur ou égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost/age/up/15/country-name/morocco")
+    GET "/age/less/{age}/country-name/{cname}" => Liste dont l'âge est inférieur ou égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost/age/less/15/country-name/morocco")
 
-"/age/{age}/country-name/{cname}" => Liste dont l'âge égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost:9002/age/16/country-name/morocco")
-"/age/up/{age}/country-name/{cname}" => Liste dont l'âge est supérieur ou égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost:9002/age/up/15/country-name/morocco")
-"/age/less/{age}/country-name/{cname}" => Liste dont l'âge est inférieur ou égal à la valeur passée sous {age} et le nom du pays est égal à la valeur passée sous {cname} (ex. : "localhost:9002/age/less/15/country-name/morocco")
-</pre> 
+    -------------------- Requêtes POST/PUT/DELETE --------------------
+    POST "/" => Ajouter un nouvel enregistrement
+    PUT "/" => Modifier l'enregistrement envoyé dans le corps de la requête
+    DELETE "/{id}" => Supprimer l'enregistrement dont l'id égal à la valeur passée sous {id}
+    </pre>
+
+# Principales fonctionnalités
+
+<ul>
+        <li>
+            Il existe deux types de réponses "success" et "failure", cette dernière est en cas d'erreur (doublant, inexistence de l'id, etc)
+        </li>
+        <li>
+            En cas d'ajout d'un nouvel enregistrement existant, un message d'erreur est affiché
+            <pre style="padding: 5px; height: 100px">
+    {
+        "messageType": "failure",
+        "message": "Valeur(s) de(s) champ(s) exist(ent) déjà country_name, country_code pour le même âge!"
+    }
+            </pre>
+        </li>
+        <li>
+            En cas de suppression d'un enregistrement dont l'id passé n'existe pas
+            <pre style="padding: 5px; height: 100px">
+    {
+        "messageType": "failure",
+        "message": "Id n'existe pas!"
+    }
+            </pre>
+        </li>
+        <li>
+            etc
+        </li>
+    </ul>
 
 # Exemple
-Voici le résultat de la requête suivante :
-> localhost:9002/age/up/12/country-name/morocco
+Voici le résultat de la requête [GET] suivante :
+> localhost/age/up/12/country-name/morocco
 <pre>
 {
     "totalElem": 9,
@@ -166,5 +198,19 @@ Voici le résultat de la requête suivante :
             "y2004": 645891
         }
     ]
+}
+</pre>
+
+Voici un exemple d'une requête [POST] pour ajouter un nouvel enregistrement
+<pre>
+{
+    "country_code": "PAY",
+    "country_name": "Pays",
+    "age": 20,
+    "y2000": 290154,
+    "y2001": 299469,
+    "y2002": 308301,
+    "y2003": 316415,
+    "y2004": 323545
 }
 </pre>
