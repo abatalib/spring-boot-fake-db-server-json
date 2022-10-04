@@ -96,6 +96,8 @@ Voici le résultat de la requête [GET] suivante :
 > localhost/age/up/12/country-name/morocco
 <pre>
 {
+    "messageType": "success",
+    "message": "Liste Age >= 12 et country_name = morocco",
     "totalElem": 9,
     "entity": [
         {
