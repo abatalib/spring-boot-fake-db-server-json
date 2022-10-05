@@ -1,5 +1,5 @@
 # API JSON SERVER pour vos tests RESTful
-Serveur API REST pour exécuter des requêtes GET/POST/PUT/DELETE de test sur des données incluant des milliers de lignes.
+Serveur API REST développé sous Springboot pour exécuter des requêtes GET/POST/PUT/DELETE de test sur des données incluant des milliers de lignes.
 
 # Dockerhub
 Le projet est disponible également sous format Docker, référez vous à l'adresse suivante :
@@ -44,7 +44,7 @@ La base de données inclue <b>3221</b> lignes. Voici un extrait des données
 
 <pre>
     -------------------------- Requêtes GET --------------------------
-    GET "/list" => Liste globale
+    GET "/" => Liste globale
     GET "/age/{age}" => Liste dont l'âge égal à la valeur passée sous {age} (ex. : "localhost/age/12")
     GET "/age/up/{age}" => Liste dont l'âge est supérieur ou égal à la valeur passée sous {age} (ex. : "localhost/age/up/15")
     GET "/age/less/{age}" =>  Liste dont l'âge est inférieur ou égal à la valeur passée sous {age} (ex. : "localhost/age/less/20")
@@ -73,7 +73,9 @@ La base de données inclue <b>3221</b> lignes. Voici un extrait des données
             <pre style="padding: 5px; height: 100px">
     {
         "messageType": "failure",
-        "message": "Valeur(s) de(s) champ(s) exist(ent) déjà country_name, country_code pour le même âge!"
+        "message": "Valeur(s) de(s) champ(s) exist(ent) déjà country_name, country_code pour le même âge!",
+        "totalElem": 0,
+        "entity": null
     }
             </pre>
         </li>
@@ -82,7 +84,9 @@ La base de données inclue <b>3221</b> lignes. Voici un extrait des données
             <pre style="padding: 5px; height: 100px">
     {
         "messageType": "failure",
-        "message": "Id n'existe pas!"
+        "message": "L'Id passé n'existe pas",
+        "totalElem": 0,
+        "entity": null
     }
             </pre>
         </li>
